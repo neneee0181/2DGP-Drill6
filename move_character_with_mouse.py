@@ -11,12 +11,14 @@ hand = load_image('hand_arrow.png')
 def moveImg():
     global x, y
     global img_position_x, img_position_y
+    global arrow
 
     if x < img_position_x:
         img_position_x -= 1
+        arrow = 0
     elif x > img_position_x:
         img_position_x += 1
-
+        arrow = 1
     if y < img_position_y:
         img_position_y -= 1
     elif y > img_position_y:
@@ -39,16 +41,17 @@ running = True
 x, y = TUK_WIDTH // 2, TUK_HEIGHT // 2
 frame = 0
 img_position_x, img_position_y = TUK_WIDTH // 2, TUK_HEIGHT // 2
+arrow = 1
 
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
     hand.draw(x,y)
-    character.clip_draw(frame * 100, 100 * 1, 100, 100, img_position_x, img_position_y)
+    character.clip_draw(frame * 100, 100 * arrow, 100, 100, img_position_x, img_position_y)
     update_canvas()
     frame = (frame + 1) % 8
     if (x == img_position_x and y == img_position_y):
-        x, y = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)
+        x, y = random.randint(10, TUK_WIDTH - 10), random.randint(10, TUK_HEIGHT - 10)
     else:
         moveImg()
 
